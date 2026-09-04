@@ -117,7 +117,7 @@ const nicheLinks = {
 
 function TextLink({ children, href }) {
   return (
-    <a className="font-semibold text-[#006fe0] underline decoration-[#006fe0]/30 underline-offset-4 transition-colors duration-200 hover:text-[#0059b3]" href={href}>
+    <a className="font-semibold text-[#006fe0] underline decoration-[#006fe0]/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:text-[#0059b3] hover:decoration-[#0059b3]" href={href}>
       {children}
     </a>
   );
@@ -191,10 +191,10 @@ function Footer() {
           </p>
         </div>
         <nav className="flex flex-wrap items-center gap-6 text-[15px] font-medium text-[#111]">
-          <a className="transition-colors duration-200 hover:text-[#013186]" href="/">Home</a>
-          <a className="transition-colors duration-200 hover:text-[#013186]" href="/about">About</a>
-          <a className="transition-colors duration-200 hover:text-[#013186]" href="/#pricing">Pricing</a>
-          <a className="transition-colors duration-200 hover:text-[#013186]" href="/#faq">FAQ</a>
+          <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/">Home</a>
+          <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/about">About</a>
+          <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#pricing">Pricing</a>
+          <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#faq">FAQ</a>
         </nav>
       </div>
     </footer>
@@ -235,10 +235,10 @@ function App() {
           <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
             <BrandLink href="/" />
             <nav className="hidden items-center gap-8 text-[15px] font-medium text-[#111] md:flex">
-              <a className="transition-colors duration-200 hover:text-[#013186]" href="/">Home</a>
-              <a className="text-[#013186] transition-colors duration-200 hover:text-[#013186]" href="/about">About</a>
-              <a className="transition-colors duration-200 hover:text-[#013186]" href="/#pricing">Pricing</a>
-              <a className="transition-colors duration-200 hover:text-[#013186]" href="/#faq">FAQ</a>
+              <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/">Home</a>
+              <a className="text-[#013186] underline decoration-[#013186]/40 underline-offset-4 transition-colors duration-200 hover:text-[#006fe0]" href="/about">About</a>
+              <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#pricing">Pricing</a>
+              <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#faq">FAQ</a>
             </nav>
             <a className="group inline-flex h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)]" href={internalLinks.bookCall}>
               Book a Call
@@ -351,10 +351,10 @@ function App() {
         <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
           <BrandLink href="/" />
           <nav className="hidden items-center gap-8 text-[15px] font-medium text-[#111] md:flex">
-            <a className="transition-colors duration-200 hover:text-[#013186]" href="/about">About</a>
-            <a className="transition-colors duration-200 hover:text-[#013186]" href="#included">Included</a>
-            <a className="transition-colors duration-200 hover:text-[#013186]" href="#pricing">Pricing</a>
-            <a className="transition-colors duration-200 hover:text-[#013186]" href="#faq">FAQ</a>
+            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/about">About</a>
+            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="#included">Included</a>
+            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="#pricing">Pricing</a>
+            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="#faq">FAQ</a>
           </nav>
           <a className="group inline-flex h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)]" href={internalLinks.bookCall}>
             Book a Call
@@ -389,7 +389,7 @@ function App() {
             <div className="flex-1 mq800:w-full">
               <div className="rounded-[18px] border border-[#e7eaf0] bg-white p-[26px] shadow-[0_18px_50px_rgba(16,24,40,0.08)] mq450:p-4">
                 <div className="rounded-[16px] bg-[#f5f9ff] p-6">
-                  <a className="text-[13px] font-bold uppercase tracking-[0.06em] text-[#0b1f44] transition-colors duration-200 hover:text-[#013186]" href={internalLinks.signup}>The Social 99 Dashboard</a>
+                  <a className="text-[13px] font-bold uppercase tracking-[0.06em] text-[#013186] underline decoration-[#013186]/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:text-[#006fe0] hover:decoration-[#006fe0]" href={internalLinks.signup}>The Social 99 Dashboard</a>
                   <div className="mt-6 grid gap-4">
                     {["Content", "Upcoming posts", "Approvals", "Published posts"].map((item) => (
                       <div className="flex items-center gap-4 rounded-[14px] border border-[#e3e9f5] bg-white p-4" key={item}>
