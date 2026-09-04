@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Serve existing files and directories as-is
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else falls through to the SPA entry point
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Long-cache the hashed build assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  <FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|webp|woff2?)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Never cache the HTML entry point
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
