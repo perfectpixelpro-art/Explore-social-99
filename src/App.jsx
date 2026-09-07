@@ -208,10 +208,10 @@ function App() {
   const isAboutPage = window.location.pathname === "/about";
   const pageTitle = isAboutPage
     ? "About Explore Social 99 | The Social 99"
-    : "Social Media Management for Small Business | Starting at $99";
+    : "Explore Social 99 | Social Media Management Starting at $99";
   const pageDescription = isAboutPage
     ? "Learn about Explore Social 99 and how it helps small businesses keep social media active with clear monthly content support."
-    : "Social media management for small businesses, including Facebook, Instagram, short-form video and content support. Plans start at $99/month.";
+    : "Grow your brand with Explore Social 99’s affordable social media management services. Boost engagement, build your presence, and get started today!";
   const canonicalUrl = isAboutPage ? "https://exploresocial99.com/about" : "https://exploresocial99.com/";
   const pageKeywords = "Social Media Management for Small Business, $99 Social Media Marketing, Facebook Management Services, Instagram Management Services, Short Form Video Services, Social Media Marketing for Restaurants, Social Media Marketing for Bars, Award Winning Websites";
 
