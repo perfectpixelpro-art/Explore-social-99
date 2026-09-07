@@ -68,7 +68,7 @@ const readiness = [
   ["✓ There’s something to promote", "A service, product, offer, event, appointment, or another reason for customers to pay attention."],
   ["✓ There’s real content to work with", "A few photos, videos, products, your space, your team, or the work happening every day."],
   ["✓ The accounts are ready", "Facebook and Instagram are set up, accessible, and connected to the right business details."],
-  ["✓ Someone can approve content", "Around 30–60 minutes a week is enough to review posts and handle anything that needs the owner’s input."],
+  ["✓ Someone can approve content", "Around 30-60 minutes a week is enough to review posts and handle anything that needs the owner’s input."],
   ["✓ Customers have somewhere to go", "A phone number, booking page, website, enquiry form, or another clear next step."],
   ["✓ The website is ready", "If social media is sending people to a website, it should make it easy to understand the business and take action. Award-Winning Website Designs can help create that next step."],
   ["✓ Expectations are realistic", "Social media can support visibility and enquiries, but it cannot replace a good service, a clear offer, or a good customer experience."],
@@ -92,8 +92,22 @@ const faqs = [
   ["Do you work with businesses that already run Google or Meta ads?", "Yes. We can focus on organic social while your ads run, or coordinate with your ads person so the messaging and offers line up. Sometimes we’ll suggest pausing or simplifying ads until your organic foundation is stronger."],
 ];
 
+const blogPosts = [
+  {
+    slug: "social-media-engagement-to-enquiries",
+    title: "Your Social Media Engagement Looks Great. So Why Isn't the Phone Ringing?",
+    excerpt:
+      "Getting likes but no enquiries? Engagement and conversion are two different jobs. Here are the five things usually missing from content that people enjoy but never act on.",
+  },
+];
+
 const internalLinks = {
   home: "https://thesocial99.com/",
+  blogs: "https://thesocial99.com/blogs",
+  contentMarketing: "https://thesocial99.com/content-marketing-services",
+  shortFormVideos: "https://thesocial99.com/short-form-videos-services",
+  youtubeManagement: "https://thesocial99.com/youtube-management-services",
+  xManagement: "https://thesocial99.com/x-twitter-management-services",
   signup: "https://thesocial99.com/signup",
   pricing: "https://thesocial99.com/pricing",
   bookCall: "https://thesocial99.com/book-a-call",
@@ -179,6 +193,40 @@ function BrandLink({ href = "/" }) {
   );
 }
 
+const navBase = "underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline";
+const navActive = "text-[#013186] underline decoration-[#013186]/40 underline-offset-4 transition-colors duration-200 hover:text-[#006fe0]";
+
+function Header({ current = "home" }) {
+  const isHome = current === "home";
+  const links = [
+    !isHome && { key: "home", label: "Home", href: "/" },
+    { key: "about", label: "About", href: "/about" },
+    isHome && { key: "included", label: "Included", href: "#included" },
+    { key: "blogs", label: "Blogs", href: "/blogs" },
+    { key: "pricing", label: "Pricing", href: isHome ? "#pricing" : "/#pricing" },
+    { key: "faq", label: "FAQ", href: isHome ? "#faq" : "/#faq" },
+  ].filter(Boolean);
+
+  return (
+    <header className="sticky top-0 z-[100] h-[72px] border-b border-[rgba(1,49,134,0.07)] bg-white/80 backdrop-blur-md">
+      <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
+        <BrandLink href="/" />
+        <nav className="hidden items-center gap-8 text-[15px] font-medium text-[#111] md:flex">
+          {links.map(({ key, label, href }) => (
+            <a className={key === current ? navActive : navBase} href={href} key={key}>
+              {label}
+            </a>
+          ))}
+        </nav>
+        <a className="group inline-flex h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)]" href={internalLinks.bookCall}>
+          Book a Call
+          <ArrowRightIcon />
+        </a>
+      </div>
+    </header>
+  );
+}
+
 function Footer() {
   return (
     <footer className="border-t border-[rgba(1,49,134,0.07)] bg-white px-5 py-12 md:px-10 lg:px-[60px]">
@@ -193,6 +241,7 @@ function Footer() {
         <nav className="flex flex-wrap items-center gap-6 text-[15px] font-medium text-[#111]">
           <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/">Home</a>
           <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/about">About</a>
+          <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/blogs">Blogs</a>
           <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#pricing">Pricing</a>
           <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#faq">FAQ</a>
         </nav>
@@ -201,18 +250,299 @@ function Footer() {
   );
 }
 
+const proseP = "mt-5 text-[17px] leading-[1.9] text-[#475467]";
+const proseH2 = "mt-[52px] text-[clamp(23px,2.5vw,31px)] font-semibold leading-[1.25] tracking-[-0.02em] text-black";
+const proseLi = "text-[17px] leading-[1.85] text-[#475467]";
+
+function ArticlePage() {
+  const post = blogPosts[0];
+  return (
+    <main className="min-h-screen bg-white font-[Inter] text-[#475467]">
+      <Header current="blogs" />
+
+      <article className="bg-white pt-[54px] pb-[70px] md:pt-[70px]">
+        <div className="mx-auto max-w-[820px] px-5 md:px-10 2xl:px-0">
+          <nav className="flex items-center gap-2 text-[14px] font-medium text-[#7a8499]">
+            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/">Home</a>
+            <span aria-hidden="true">/</span>
+            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/blogs">Blogs</a>
+          </nav>
+
+          <h1 className="mt-[22px] text-[clamp(30px,4.2vw,50px)] font-bold leading-[1.14] tracking-[-0.028em] text-[#013186]">
+            {post.title}
+          </h1>
+
+          <p className={proseP}>
+            Scroll through almost any small business account and you&rsquo;ll see the same pattern. Nice photos,
+            decent likes, the occasional comment saying &ldquo;love this.&rdquo; The numbers look fine.
+          </p>
+          <p className={proseP}>And yet enquiries stay flat.</p>
+          <p className={proseP}>
+            This isn&rsquo;t just a feeling. Engagement is real. It just isn&rsquo;t automatically turning into
+            bookings or sales.
+          </p>
+          <p className={proseP}>
+            Content marketing isn&rsquo;t the same as copywriting. Copywriting is built to convert. Content
+            marketing is built to earn trust and build an audience over time. So a page can be doing content
+            marketing correctly and still not see it show up as bookings this week, because trust-building and
+            conversion are different jobs with different timelines.
+          </p>
+          <p className={proseP}>
+            That&rsquo;s the real issue for most small businesses online. The trust-building job is getting done.
+            The conversion job isn&rsquo;t.
+          </p>
+          <p className={proseP}>
+            This is where good{" "}
+            <TextLink href={internalLinks.contentMarketing}>Content Marketing Services</TextLink> actually earn
+            their keep, not by posting more, but by posting the right things in the right order, on the platforms
+            your customers actually use.
+          </p>
+          <p className={proseP}>Here&rsquo;s what&rsquo;s usually going wrong.</p>
+
+          <h2 className={proseH2}>1. Every Post Is a Finished Result, Never a Reason to Trust You Specifically</h2>
+          <p className={proseP}>
+            A great-looking result tells someone the outcome is possible. It doesn&rsquo;t tell them why they
+            should trust your business to deliver it for them.
+          </p>
+          <p className={proseP}>
+            A salon shows a perfect balayage. A contractor shows a finished kitchen. A dentist shows a smile
+            makeover. All impressive, but the thing a new customer is actually nervous about isn&rsquo;t whether
+            the outcome is possible. It&rsquo;s whether this specific business understands what they need.
+          </p>
+          <p className={proseP}>
+            A bit of the in-between usually does more work than another polished final shot:
+          </p>
+          <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#006fe0]">
+            <li className={proseLi}>A consultation moment: &ldquo;This is what we talked through before we started&rdquo;</li>
+            <li className={proseLi}>A quick clip explaining why a certain approach was chosen for this particular customer</li>
+            <li className={proseLi}>A behind-the-scenes look at how the work actually gets done</li>
+          </ul>
+          <p className={proseP}>
+            None of this needs to be polished. It works better because it looks real.
+          </p>
+
+          <h2 className={proseH2}>2. There&rsquo;s No Obvious Next Step</h2>
+          <p className={proseP}>
+            A great post ends. The viewer watches, feels something, and scrolls to the next thing.
+          </p>
+          <p className={proseP}>
+            Engagement only turns into revenue if you deliberately channel it. Left alone, it just stays a nice
+            number. That channeling has to happen inside the post, not somewhere the customer has to go hunting
+            for it.
+          </p>
+          <p className={proseP}>
+            This doesn&rsquo;t mean slapping &ldquo;Book Now&rdquo; or &ldquo;Order Today&rdquo; under every post.
+            It means occasionally making the next step obvious and specific:
+          </p>
+          <blockquote className="mt-6 border-l-[3px] border-[#006fe0] pl-5 text-[17px] italic leading-[1.85] text-[#0b1f44]">
+            &ldquo;This service takes about 45 minutes and starts with a quick chat. Link in bio if you&rsquo;re
+            curious whether it&rsquo;d work for you.&rdquo;
+          </blockquote>
+          <p className={proseP}>
+            Specific, low-pressure, and it answers the questions someone would actually have before reaching out:
+            how long, how much effort, is this even the right fit for me.
+          </p>
+
+          <h2 className={proseH2}>3. The Content Is Made for the Ideal Customer, Not the Hesitant First-Timer</h2>
+          <p className={proseP}>
+            Most business content shows off the dream outcome: the shiniest result, the most dramatic
+            before-and-after, the customer who clearly already trusted the process going in.
+          </p>
+          <p className={proseP}>
+            But a lot of people scrolling aren&rsquo;t there yet. Some had a disappointing experience somewhere
+            else. Some aren&rsquo;t sure if their situation is &ldquo;too complicated&rdquo; or &ldquo;not worth
+            it.&rdquo; Some don&rsquo;t know what to even ask for. Some are worried about the cost before
+            they&rsquo;ve even asked.
+          </p>
+          <p className={proseP}>
+            That person isn&rsquo;t going to reach out for one impressive post alone. They need to see themselves
+            somewhere in the content. A post addressing a specific concern. An explainer on what actually happens
+            during a first visit. An honest answer to &ldquo;how much should I expect to pay for this.&rdquo;
+          </p>
+          <p className={proseP}>
+            For salons looking for social media management Australia, the content should answer the questions
+            potential customers have before they feel ready to book.
+          </p>
+          <p className={proseP}>
+            If your content only ever speaks to the customer who&rsquo;s already sold, you&rsquo;re leaving out
+            the one who just needs a bit more reason to trust you.
+          </p>
+
+          <h2 className={proseH2}>4. Nothing Ever Explains the &ldquo;Why&rdquo;</h2>
+          <p className={proseP}>
+            The point of content marketing is to educate and inform, not just to promote, because people engage
+            more with content that actually helps them than with content that&rsquo;s purely trying to sell.
+          </p>
+          <p className={proseP}>
+            The finished result is impressive. A finished result with a two-line explanation is useful, and useful
+            content gets saved, shared and remembered instead of just liked in passing.
+          </p>
+          <p className={proseP}>Small additions make a big difference:</p>
+          <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#006fe0]">
+            <li className={proseLi}>&ldquo;Why we recommended this option instead of the more obvious one&rdquo;</li>
+            <li className={proseLi}>&ldquo;What this service actually includes, step by step&rdquo;</li>
+            <li className={proseLi}>&ldquo;Why this approach works better for your specific situation&rdquo;</li>
+          </ul>
+          <p className={proseP}>
+            These moments turn an account from a portfolio into something closer to a resource. The kind of page
+            someone follows even before they&rsquo;re ready to buy, because it&rsquo;s actually teaching them
+            something.
+          </p>
+
+          <h2 className={proseH2}>5. There&rsquo;s No Face (or Personality) Behind the Business</h2>
+          <p className={proseP}>
+            People don&rsquo;t just buy a service. They choose a business they feel comfortable with, especially
+            for anything personal, expensive, or unfamiliar.
+          </p>
+          <p className={proseP}>
+            If every post is product shots and finished results, there&rsquo;s no sense of who&rsquo;s actually
+            behind the work. A quick clip of the owner explaining their approach. A &ldquo;day in the
+            business&rdquo; story. Captions that sound like an actual person wrote them. Small things, but they go
+            a long way toward making that first enquiry feel less like a gamble.
+          </p>
+          <p className={proseP}>
+            This doesn&rsquo;t mean every owner needs to become a content creator. Even an occasional, low-effort
+            personality, a caption with some real voice in it, a short intro video that only needs filming once,
+            makes the account feel like a place with real people in it, not just a highlight reel.
+          </p>
+
+          <h2 className={proseH2}>Track the Metrics That Actually Matter</h2>
+          <p className={proseP}>
+            Small business guidance is clear on this point: likes, comments and follower counts are only a
+            starting signal. The metrics that actually tell you whether content is working are calls, messages,
+            website visits and enquiries. A page can be &ldquo;performing well&rdquo; by every social metric and
+            still not be doing its job for the business.
+          </p>
+          <p className={proseP}>
+            So the real audit isn&rsquo;t &ldquo;are people engaging with this.&rdquo; It&rsquo;s &ldquo;are the
+            people who engage with this ever turning into someone who reaches out.&rdquo; If the answer is no, the
+            content itself is usually the first place to look, not the algorithm.
+          </p>
+
+          <h2 className={proseH2}>What Actually Moves Someone From &ldquo;Nice Post&rdquo; to &ldquo;Let Me Reach Out&rdquo;</h2>
+          <p className={proseP}>
+            None of this means ditching your best-performing content. Those posts genuinely work and should stay a
+            core part of the mix. The shift is in what surrounds them:
+          </p>
+          <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#006fe0]">
+            <li className={proseLi}>A little bit of the in-between, not just the reveal</li>
+            <li className={proseLi}>
+              <TextLink href={internalLinks.shortFormVideos}>Short-form videos</TextLink> that show the process,
+              answer common questions, or give people a feel for the experience
+            </li>
+            <li className={proseLi}>One clear, low-pressure next step every so often</li>
+            <li className={proseLi}>Content that speaks to the hesitant first-timer, not just the customer who&rsquo;s already convinced</li>
+            <li className={proseLi}>Small explanations of the &ldquo;why,&rdquo; not just the &ldquo;wow&rdquo;</li>
+            <li className={proseLi}>Some actual personality behind the work</li>
+          </ul>
+          <p className={proseP}>
+            Engagement tells you people like watching. Enquiries tell you people trust you enough to take the next
+            step.
+          </p>
+          <p className={proseP}>
+            Getting more of the second usually isn&rsquo;t about posting more. It&rsquo;s about giving people what
+            they actually need to say yes.
+          </p>
+
+          <h2 className={proseH2}>Not Every Platform Needs the Same Thing From You</h2>
+          <p className={proseP}>
+            Most small business owners don&rsquo;t have time to sit down and figure out what belongs where, so
+            everything ends up posted everywhere in roughly the same format. That&rsquo;s usually a mistake.
+          </p>
+          <p className={proseP}>
+            Instagram is still doing most of the heavy lifting for small businesses. It&rsquo;s where the visual
+            results, reels, stories and behind-the-scenes moments from earlier in this piece actually belong, and
+            Instagram Management Services tend to be the first thing worth getting right.
+          </p>
+          <p className={proseP}>
+            Facebook still matters more than people expect, particularly for reaching local, slightly older
+            customers who find businesses through reviews and community groups rather than hashtags. Facebook
+            Management Services can pick up that side of things.
+          </p>
+          <p className={proseP}>
+            TikTok is where process videos and satisfying transformations travel furthest, often reaching people
+            who&rsquo;ve never heard of you before. TikTok Management Services can be built specifically for that.
+          </p>
+          <p className={proseP}>
+            YouTube works differently. Longer, explainer-style content is better suited to winning over the
+            hesitant first-timer than a fifteen-second clip is, which is where{" "}
+            <TextLink href={internalLinks.youtubeManagement}>YouTube Social Media Management</TextLink> comes in.
+          </p>
+          <p className={proseP}>
+            LinkedIn is rarely about direct customers for a small business, but it&rsquo;s worth having if
+            you&rsquo;re hiring or building a local reputation, and LinkedIn Social Media Management can keep it
+            ticking along without much attention.
+          </p>
+          <p className={proseP}>
+            X plays a smaller role for most small businesses these days, mostly useful for quick updates or
+            customer service, so <TextLink href={internalLinks.xManagement}>X Social Media Management</TextLink>{" "}
+            is usually a lighter-touch addition rather than a priority.
+          </p>
+
+          <h2 className={proseH2}>If Your Engagement Looks Good but Your Calendar Doesn&rsquo;t</h2>
+          <p className={proseP}>
+            Chances are the fix isn&rsquo;t a full rebuild of your content. It&rsquo;s usually smaller than that,
+            more about what surrounds the posts you&rsquo;re already making than replacing them.
+          </p>
+          <p className={proseP}>
+            The Social 99 runs a <TextLink href={internalLinks.home}>$99 social media</TextLink> marketing plan for
+            businesses who want that kind of consistent, done-for-you content without jumping straight into a
+            bigger package.
+          </p>
+          <p className={proseP}>
+            Book a call and we&rsquo;ll talk through what&rsquo;s actually happening with your content.
+          </p>
+
+          <div className="mt-[38px] flex flex-wrap items-center gap-4">
+            <CtaButton href={internalLinks.bookCall}>Book a Call</CtaButton>
+            <a className="social-btn-secondary inline-flex h-[50px] items-center justify-center gap-[10px] rounded-[25px] px-[26px] text-[16px] font-semibold transition-colors duration-200 mq450:h-[46px] mq450:px-[22px] mq450:text-[14.5px]" href="/blogs">
+              Back to all articles
+            </a>
+          </div>
+        </div>
+      </article>
+      <Footer />
+    </main>
+  );
+}
+
 const aboutPageWrap = "ml-[100px] max-w-[1100px] mq1350:ml-[80px] mq800:ml-0";
 const aboutHeroWrap = "ml-[100px] max-w-[920px] mq1350:ml-[80px] mq800:ml-0";
 
 function App() {
-  const isAboutPage = window.location.pathname === "/about";
-  const pageTitle = isAboutPage
-    ? "About Explore Social 99 | The Social 99"
-    : "Explore Social 99 | Social Media Management Starting at $99";
-  const pageDescription = isAboutPage
-    ? "Learn about Explore Social 99 and how it helps small businesses keep social media active with clear monthly content support."
-    : "Grow your brand with Explore Social 99’s affordable social media management services. Boost engagement, build your presence, and get started today!";
-  const canonicalUrl = isAboutPage ? "https://exploresocial99.com/about" : "https://exploresocial99.com/";
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const isAboutPage = path === "/about";
+  const isBlogsPage = path === "/blogs";
+  const isArticlePage = path === `/${blogPosts[0].slug}`;
+
+  const meta = {
+    "/about": {
+      title: "About Explore Social 99 | The Social 99",
+      description:
+        "Learn about Explore Social 99 and how it helps small businesses keep social media active with clear monthly content support.",
+      canonical: "https://exploresocial99.com/about",
+    },
+    "/social-media-engagement-to-enquiries": {
+      title: "Social Media Engagement Not Converting? Explore Social 99 Can Help",
+      description:
+        "Getting likes but no enquiries? Explore Social 99 helps turn social media engagement into real bookings and sales. Book a quick strategy call today.",
+      canonical: "https://exploresocial99.com/social-media-engagement-to-enquiries",
+    },
+    "/blogs": {
+      title: "Blog | Social Media Insights for Small Businesses | Explore Social 99",
+      description:
+        "Practical articles on social media management, short-form video, and content planning for small businesses. Written to clarify how strong execution is built.",
+      canonical: "https://exploresocial99.com/blogs",
+    },
+    "/": {
+      title: "Explore Social 99 | Social Media Management Starting at $99",
+      description:
+        "Grow your brand with Explore Social 99’s affordable social media management services. Boost engagement, build your presence, and get started today!",
+      canonical: "https://exploresocial99.com/",
+    },
+  };
+
+  const { title: pageTitle, description: pageDescription, canonical: canonicalUrl } = meta[path] ?? meta["/"];
   const pageKeywords = "Social Media Management for Small Business, $99 Social Media Marketing, Facebook Management Services, Instagram Management Services, Short Form Video Services, Social Media Marketing for Restaurants, Social Media Marketing for Bars, Award Winning Websites";
 
   document.title = pageTitle;
@@ -225,27 +555,75 @@ function App() {
   document.querySelector('meta[property="og:title"]')?.setAttribute("content", pageTitle);
   document.querySelector('meta[property="og:description"]')?.setAttribute("content", pageDescription);
   document.querySelector('meta[property="og:url"]')?.setAttribute("content", canonicalUrl);
+  document.querySelector('meta[property="og:type"]')?.setAttribute("content", isArticlePage ? "article" : "website");
   document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", pageTitle);
   document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", pageDescription);
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", pageTitle);
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", pageDescription);
+
+  if (isArticlePage) {
+    return <ArticlePage />;
+  }
+
+  if (isBlogsPage) {
+    return (
+      <main className="min-h-screen bg-white font-[Inter] text-[#475467]">
+        <Header current="blogs" />
+
+        <section className="bg-white pt-[70px] pb-[50px] md:pt-[90px]">
+          <div className="mx-auto max-w-[1440px] px-5 md:px-10 lg:px-[40px] xl:px-[60px] 2xl:px-0">
+            <p className="text-center text-[12px] font-bold uppercase tracking-[0.16em] text-[#013186]">The Blog</p>
+            <h1 className="mx-auto mt-[16px] max-w-[1100px] text-center text-[clamp(38px,6vw,86px)] font-bold leading-[1.05] tracking-[-0.03em] text-[#013186]">
+              Insights that Shape Execution
+            </h1>
+            <p className="mx-auto mt-[22px] max-w-[820px] text-center text-[clamp(16px,1.4vw,20px)] leading-[1.7] text-[#475467]">
+              Our blog shares structured perspectives on digital work, content systems, and brand
+              consistency. Each article is written to clarify how strong execution is built, not improvised.
+            </p>
+          </div>
+        </section>
+
+        <section className="bg-white pb-[80px]">
+          <div className="mx-auto max-w-[1440px] px-5 md:px-10 lg:px-[40px] xl:px-[60px] 2xl:px-0">
+            <div className="flex flex-wrap gap-6">
+              {blogPosts.map(({ slug, title, excerpt }) => (
+                <article
+                  className="flex w-full max-w-[420px] flex-col rounded-[18px] border border-[#e7eaf0] bg-[#f5f9ff] p-5 shadow-[0_18px_50px_rgba(16,24,40,0.08)] transition-transform duration-200 hover:-translate-y-[3px]"
+                  key={slug}
+                >
+                  <div className="flex min-h-[220px] items-center justify-center rounded-[14px] bg-white p-6">
+                    <h2 className="text-center text-[22px] font-bold leading-[1.3] tracking-[-0.02em] text-[#013186]">
+                      {title}
+                    </h2>
+                  </div>
+                  <h3 className="mt-6 text-[22px] font-bold leading-[1.3] tracking-[-0.02em] text-[#013186]">
+                    {title}
+                  </h3>
+                  <p className="mt-4 flex-1 text-[15px] leading-[1.75] text-[#475467]">{excerpt}</p>
+                  <div className="mt-6">
+                    <a
+                      className="group inline-flex h-[46px] items-center justify-center gap-[10px] rounded-[10px] bg-[#013186] px-[22px] text-[15px] font-bold text-white transition-colors duration-200 hover:bg-[#012270]"
+                      href={`/${slug}`}
+                    >
+                      Read More
+                      <ArrowRightIcon />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </main>
+    );
+  }
 
   if (isAboutPage) {
     return (
       <main className="min-h-screen bg-white font-[Inter] text-[#475467]">
-        <header className="sticky top-0 z-[100] h-[72px] border-b border-[rgba(1,49,134,0.07)] bg-white/80 backdrop-blur-md">
-          <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
-            <BrandLink href="/" />
-            <nav className="hidden items-center gap-8 text-[15px] font-medium text-[#111] md:flex">
-              <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/">Home</a>
-              <a className="text-[#013186] underline decoration-[#013186]/40 underline-offset-4 transition-colors duration-200 hover:text-[#006fe0]" href="/about">About</a>
-              <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#pricing">Pricing</a>
-              <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/#faq">FAQ</a>
-            </nav>
-            <a className="group inline-flex h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)]" href={internalLinks.bookCall}>
-              Book a Call
-              <ArrowRightIcon />
-            </a>
-          </div>
-        </header>
+        <Header current="about" />
 
         <section className="bg-white py-[60px] md:py-[80px]">
           <div className="mx-auto max-w-[1440px] px-5 md:px-10 lg:px-[40px] xl:px-[60px] 2xl:px-0">
@@ -347,21 +725,7 @@ function App() {
 
   return (
     <main className="min-h-screen bg-white font-[Inter] text-[#475467]">
-      <header className="sticky top-0 z-[100] h-[72px] border-b border-[rgba(1,49,134,0.07)] bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
-          <BrandLink href="/" />
-          <nav className="hidden items-center gap-8 text-[15px] font-medium text-[#111] md:flex">
-            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="/about">About</a>
-            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="#included">Included</a>
-            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="#pricing">Pricing</a>
-            <a className="underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline" href="#faq">FAQ</a>
-          </nav>
-          <a className="group inline-flex h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)]" href={internalLinks.bookCall}>
-            Book a Call
-            <ArrowRightIcon />
-          </a>
-        </div>
-      </header>
+      <Header current="home" />
 
       <section id="top" className="bg-white py-[50px] md:pt-[80px] md:pb-[70px]">
         <div className="mx-auto max-w-[1440px] px-5 md:px-10 lg:px-[40px] xl:px-[60px] 2xl:px-0">
