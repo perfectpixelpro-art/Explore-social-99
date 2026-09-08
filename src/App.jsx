@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import exploreSocialLogo from "../FinalArrLogo.png";
 
 const differentiators = [
@@ -186,7 +187,7 @@ function BrandLink({ href = "/" }) {
   return (
     <a className="flex items-center gap-3" href={href}>
       <img className="h-[43px] w-auto mq450:h-[40px]" src={exploreSocialLogo} alt="Explore Social 99 logo" />
-      <span className="text-[22px] font-bold tracking-[-0.02em] text-[#013186] mq450:text-[18px]">
+      <span className="whitespace-nowrap text-[22px] font-bold tracking-[-0.02em] text-[#013186] mq450:text-[19px]">
         Explore Social 99
       </span>
     </a>
@@ -196,7 +197,27 @@ function BrandLink({ href = "/" }) {
 const navBase = "underline-offset-4 transition-colors duration-200 hover:text-[#013186] hover:underline";
 const navActive = "text-[#013186] underline decoration-[#013186]/40 underline-offset-4 transition-colors duration-200 hover:text-[#006fe0]";
 
+function MenuIcon({ open }) {
+  return (
+    <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+      {open ? (
+        <>
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </>
+      ) : (
+        <>
+          <path d="M4 7h16" />
+          <path d="M4 12h16" />
+          <path d="M4 17h16" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 function Header({ current = "home" }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const isHome = current === "home";
   const links = [
     !isHome && { key: "home", label: "Home", href: "/" },
@@ -207,9 +228,18 @@ function Header({ current = "home" }) {
     { key: "faq", label: "FAQ", href: isHome ? "#faq" : "/#faq" },
   ].filter(Boolean);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
   return (
-    <header className="sticky top-0 z-[100] h-[72px] border-b border-[rgba(1,49,134,0.07)] bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
+    <header className="sticky top-0 z-[100] border-b border-[rgba(1,49,134,0.07)] bg-white/80 backdrop-blur-md">
+      <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 md:px-10 lg:px-[60px] 2xl:px-0">
         <BrandLink href="/" />
         <nav className="hidden items-center gap-8 text-[15px] font-medium text-[#111] md:flex">
           {links.map(({ key, label, href }) => (
@@ -218,15 +248,55 @@ function Header({ current = "home" }) {
             </a>
           ))}
         </nav>
-        <a className="group inline-flex h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)]" href={internalLinks.bookCall}>
-          Book a Call
-          <ArrowRightIcon />
-        </a>
+        <div className="flex items-center gap-2">
+          <a className="group hidden h-[43px] items-center gap-[10px] rounded-[25.5px] border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] pl-5 pr-[14px] text-[14px] font-bold text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)] md:inline-flex" href={internalLinks.bookCall}>
+            Book a Call
+            <ArrowRightIcon />
+          </a>
+          <button
+            aria-controls="mobile-nav"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="flex h-[43px] w-[43px] items-center justify-center rounded-full border border-[rgba(1,49,134,0.07)] bg-[rgba(188,214,255,0.37)] text-[#013186] transition-colors duration-200 hover:bg-[rgba(188,214,255,0.6)] md:hidden"
+            onClick={() => setMenuOpen((open) => !open)}
+            type="button"
+          >
+            <MenuIcon open={menuOpen} />
+          </button>
+        </div>
       </div>
+
+      <nav
+        className={`overflow-hidden border-t border-[rgba(1,49,134,0.07)] bg-white transition-[max-height] duration-300 md:hidden ${menuOpen ? "max-h-[520px]" : "max-h-0 border-t-0"}`}
+        id="mobile-nav"
+      >
+        <ul className="flex flex-col px-5 py-2 text-[16px] font-medium text-[#111]">
+          {links.map(({ key, label, href }) => (
+            <li className="border-b border-[#eef1f6] last:border-b-0" key={key}>
+              <a
+                className={`block py-[14px] transition-colors duration-200 ${key === current ? "font-semibold text-[#013186]" : "hover:text-[#013186]"}`}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+          <li className="pt-4 pb-2">
+            <a
+              className="group inline-flex h-[48px] w-full items-center justify-center gap-[10px] rounded-[25px] bg-[#006fe0] text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#0059b3]"
+              href={internalLinks.bookCall}
+              onClick={() => setMenuOpen(false)}
+            >
+              Book a Call
+              <ArrowRightIcon />
+            </a>
+          </li>
+        </ul>
+      </nav>
     </header>
   );
 }
-
 function Footer() {
   return (
     <footer className="border-t border-[rgba(1,49,134,0.07)] bg-white px-5 py-12 md:px-10 lg:px-[60px]">
@@ -492,7 +562,7 @@ function ArticlePage() {
           <p className={proseP}>
             Book a call and we&rsquo;ll talk through what&rsquo;s actually happening with your content.
           </p>
-
+          
           <div className="mt-[38px] flex flex-wrap items-center gap-4">
             <CtaButton href={internalLinks.bookCall}>Book a Call</CtaButton>
             <a className="social-btn-secondary inline-flex h-[50px] items-center justify-center gap-[10px] rounded-[25px] px-[26px] text-[16px] font-semibold transition-colors duration-200 mq450:h-[46px] mq450:px-[22px] mq450:text-[14.5px]" href="/blogs">
